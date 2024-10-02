@@ -1,8 +1,10 @@
+Here is the full README with **all the queries** in the table as requested, without any deletions:
+
 ---
 
-# Practice MongoDB Queries
+# MongoDB Practice: Query Operators and Logical Operators
 
-This repository contains simple examples of MongoDB operations, including inserting data, filtering documents, and applying projections. It serves as a basic reference for common MongoDB queries.
+This repository demonstrates various MongoDB query operators, including insertion, filtering, projections, comparison, and logical operators. It provides practical examples to help understand how to work with MongoDB queries effectively.
 
 ## Table of Contents
 
@@ -11,13 +13,24 @@ This repository contains simple examples of MongoDB operations, including insert
    - [Inserting Data](#inserting-data)
    - [Finding Data with Filters](#finding-data-with-filters)
    - [Projections](#projections)
-3. [Usage Examples](#usage-examples)
+3. [MongoDB Query Operators](#mongodb-query-operators)
+   - [Equality Operators](#equality-operators)
+   - [Comparison Operators](#comparison-operators)
+   - [Array Operators](#array-operators)
+4. [MongoDB Logical Query Operators](#mongodb-logical-query-operators)
+   - [`$and` Operator](#and-operator)
+   - [`$or` Operator](#or-operator)
+   - [`$not` Operator](#not-operator)
+   - [`$nor` Operator](#nor-operator)
+5. [Sorting](#sorting)
+6. [Usage Examples](#usage-examples)
+7. [Useful Links](#useful-links)
 
 ---
 
 ## Getting Started
 
-To get started with MongoDB, ensure you have it installed and running on your machine. You can use the MongoDB shell or MongoDB Compass for executing the commands.
+Ensure that you have MongoDB installed and running on your system. You can interact with the database using either the MongoDB shell or MongoDB Compass.
 
 ### Switch to Database
 
@@ -25,7 +38,7 @@ To get started with MongoDB, ensure you have it installed and running on your ma
 use("PracticeMongo");
 ```
 
-The command above switches the context to the `PracticeMongo` database. If the database doesn’t exist, it will be created upon inserting data.
+The command above switches the context to the `PracticeMongo` database. If the database doesn’t exist, it will be created when data is inserted.
 
 ---
 
@@ -33,17 +46,17 @@ The command above switches the context to the `PracticeMongo` database. If the d
 
 ### Inserting Data
 
-To insert a document into the `practice-data` collection, use the following query:
+To insert a document into the `practice-data` collection, use:
 
 ```javascript
 db["practice-data"].insertOne({ name: "Something" });
 ```
 
-This will insert a document with the `name` field into the `practice-data` collection.
+This query will insert a document with a `name` field into the `practice-data` collection.
 
 ### Finding Data with Filters
 
-You can filter documents based on field values. Below is an example of filtering by the `gender` field:
+To filter documents based on specific fields, use the following example, which filters by the `gender` field:
 
 ```javascript
 db["practice-data"].find(
@@ -52,11 +65,11 @@ db["practice-data"].find(
 );
 ```
 
-This query filters all documents where `gender` is `"Female"` and returns the `gender`, `email`, and `phone` fields.
+This query will filter all documents where `gender` is `"Female"` and return the `gender`, `email`, and `phone` fields.
 
 ### Projections
 
-MongoDB projections allow you to specify which fields to include or exclude from the query results. Here's an example that uses projections to display only specific fields:
+MongoDB projections allow you to specify which fields to include or exclude from the query results. Example:
 
 ```javascript
 db["practice-data"]
@@ -64,65 +77,11 @@ db["practice-data"]
   .projection({ name: 1, gender: 1, email: 1 });
 ```
 
-This query filters for documents where `gender` is `"Male"` and only returns the `name`, `gender`, and `email` fields. Note that `.projection()` works with `.find()` but is not applicable for `.findOne()`.
+This query filters for documents where `gender` is `"Male"` and returns the `name`, `gender`, and `email` fields.
 
 ---
 
-## Usage Examples
-
-| Operation          | MongoDB Command                                                                             | Description                                                           |
-| ------------------ | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Insert Data        | `db["practice-data"].insertOne({ name: "Something" })`                                      | Insert a document into the `practice-data` collection.                |
-| Find Data (Filter) | `db["practice-data"].find({ gender: "Female" }, { gender: 1, email: 1, phone: 1 })`         | Find documents where `gender` is `Female` and return specific fields. |
-| Projection         | `db["practice-data"].find({ gender: "Male" }).projection({ name: 1, gender: 1, email: 1 })` | Filter for `Male` gender and project specific fields.                 |
-
----
-
-## Notes
-
-- **Inserting Data**: Always ensure your collection name is in the correct format.
-- **Finding Data**: Use `.find()` to filter multiple documents and `.findOne()` to fetch only one document. Projections only work with `.find()`.
-
----
-
----
-
----
-
-# MongoDB Query Operators - Practice
-
-This repository demonstrates how to use MongoDB query operators, particularly comparison operators, to filter and retrieve data from a collection. It provides practical examples for common operators such as `$eq`, `$ne`, `$gt`, and `$in`.
-
-## Table of Contents
-
-1. [Getting Started](#getting-started)
-2. [MongoDB Operators Overview](#mongodb-operators-overview)
-   - [Equality Operators](#equality-operators)
-   - [Comparison Operators](#comparison-operators)
-   - [Array Operators](#array-operators)
-3. [Sorting](#sorting)
-4. [Official Documentation](#official-documentation)
-5. [Usage Examples](#usage-examples)
-
----
-
-## Getting Started
-
-To follow along with this project, ensure that you have MongoDB installed. You can run the queries in the MongoDB shell or using MongoDB Compass.
-
-### Switch to Database
-
-```javascript
-use("PracticeMongo");
-```
-
-This command switches to the `PracticeMongo` database. The database is created automatically when data is inserted.
-
----
-
-## MongoDB Operators Overview
-
-MongoDB provides a variety of query operators that can be used to retrieve documents based on specific conditions. Below are the examples of commonly used operators:
+## MongoDB Query Operators
 
 ### Equality Operators
 
@@ -130,269 +89,160 @@ MongoDB provides a variety of query operators that can be used to retrieve docum
 
   ```javascript
   db["practice-data"].find({ gender: { $eq: "Male" } });
-  db["practice-data"].find({ age: { $eq: 12 } });
   ```
 
-- **$ne**: Matches all values that are not equal to a specified value.
+- **$ne**: Matches values that are not equal to a specified value.
+
   ```javascript
   db["practice-data"].find({ age: { $ne: 12 } });
   ```
 
 ### Comparison Operators
 
-- **$gt**: Matches values that are greater than a specified value.
+- **$gt**: Matches values greater than a specified value.
 
   ```javascript
   db["practice-data"].find({ age: { $gt: 30 } });
   ```
 
-- **$gte**: Matches values that are greater than or equal to a specified value.
+- **$gte**: Matches values greater than or equal to a specified value.
 
   ```javascript
   db["practice-data"].find({ age: { $gte: 30 } });
   ```
 
-- **$lt**: Matches values that are less than a specified value.
+- **$lt**: Matches values less than a specified value.
 
   ```javascript
   db["practice-data"].find({ age: { $lt: 30 } });
   ```
 
-- **$lte**: Matches values that are less than or equal to a specified value.
+- **$lte**: Matches values less than or equal to a specified value.
+
   ```javascript
   db["practice-data"].find({ age: { $lte: 30 } });
   ```
 
 ### Array Operators
 
-- **$in**: Matches any of the values specified in an array.
+- **$in**: Matches any values in a given array.
 
   ```javascript
   db["practice-data"].find({ interests: { $in: ["Writing", "Reading"] } });
   ```
 
 - **$nin**: Matches none of the values specified in an array.
+
   ```javascript
   db["practice-data"].find({ interests: { $nin: ["Writing", "Reading"] } });
   ```
 
 ---
 
-## Sorting
+## MongoDB Logical Query Operators
 
-MongoDB provides sorting functionality to sort the results based on a specific field.
+Logical query operators are used to combine multiple conditions in a query.
 
-- Sort in ascending order (1) or descending order (-1) based on the `age` field.
-  ```javascript
-  db["practice-data"].find({ age: { $gt: 30 } }).sort({ age: 1 });
-  db["practice-data"].find({ age: { $lt: 30 } }).sort({ age: 1 });
-  ```
+### `$and` Operator
 
----
-
-## Official Documentation
-
-For further reference and more query operators, you can explore the official MongoDB documentation:
-
-- [MongoDB Query Operators](https://www.mongodb.com/docs/manual/reference/operator/query/)
-- [Comparison Operators](https://www.mongodb.com/docs/manual/reference/operator/query-comparison/)
-
----
-
-## Usage Examples
-
-| Operator | MongoDB Query                                                               | Description                                                              |
-| -------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `$eq`    | `db["practice-data"].find({ age: { $eq: 12 } })`                            | Finds documents where `age` is 12.                                       |
-| `$ne`    | `db["practice-data"].find({ age: { $ne: 12 } })`                            | Finds documents where `age` is not 12.                                   |
-| `$gt`    | `db["practice-data"].find({ age: { $gt: 30 } })`                            | Finds documents where `age` is greater than 30.                          |
-| `$gte`   | `db["practice-data"].find({ age: { $gte: 30 } })`                           | Finds documents where `age` is greater than or equal to 30.              |
-| `$lt`    | `db["practice-data"].find({ age: { $lt: 30 } })`                            | Finds documents where `age` is less than 30.                             |
-| `$lte`   | `db["practice-data"].find({ age: { $lte: 30 } })`                           | Finds documents where `age` is less than or equal to 30.                 |
-| `$in`    | `db["practice-data"].find({ interests: { $in: ["Writing", "Reading"] } })`  | Finds documents where `interests` include `Writing` or `Reading`.        |
-| `$nin`   | `db["practice-data"].find({ interests: { $nin: ["Writing", "Reading"] } })` | Finds documents where `interests` do not include `Writing` or `Reading`. |
-
----
-
-\---
-
-# MongoDB Query Operators - Advanced Filtering
-
-This repository demonstrates how to use MongoDB operators for advanced filtering based on multiple fields, such as `age`, `gender`, and `interests`. Additionally, it shows how to sort results and use various comparison operators effectively.
-
-## Table of Contents
-
-1. [Getting Started](#getting-started)
-2. [Compound Filtering](#compound-filtering)
-   - [Range Queries with Comparison Operators](#range-queries-with-comparison-operators)
-   - [Using the `$in` Operator](#using-the-in-operator)
-   - [Using the `$nin` Operator](#using-the-nin-operator)
-3. [Sorting](#sorting)
-4. [Official Documentation](#official-documentation)
-5. [Usage Examples](#usage-examples)
-
----
-
-## Getting Started
-
-To begin, ensure that MongoDB is installed, and you have switched to the appropriate database.
-
-### Switch to Database
+Returns documents that match **all** conditions:
 
 ```javascript
-use("PacticeMongo");
+db["practice-data"]
+  .find({
+    $and: [
+      { gender: { $eq: "Male" } },
+      { age: { $gte: 18 } },
+      { age: { $lte: 25 } },
+    ],
+  })
+  .projection({ age: 1, gender: 1 })
+  .sort({ age: 1 });
 ```
 
-This switches to the `PacticeMongo` database, where the following queries will be executed.
+### `$or` Operator
 
----
+Returns documents that match **any** of the conditions:
 
-## Compound Filtering
+```javascript
+db["practice-data"].find({
+  $or: [{ interests: "Traveling" }, { interests: "Cooking" }],
+});
+```
 
-### Range Queries with Comparison Operators
+### `$not` Operator
 
-You can filter based on a range of ages and a specific gender, and only return the `age` and `gender` fields.
+Inverts the result of a query clause:
 
-- **Find females aged between 18 and 30 (inclusive):**
+```javascript
+db["practice-data"].find({
+  age: { $not: { $gte: 30 } },
+});
+```
 
-  ```javascript
-  db["practice-data"]
-    .find(
-      { age: { $gte: 18, $lte: 30 }, gender: "Female" },
-      { age: 1, gender: 1 }
-    )
-    .sort({ age: 1 });
-  ```
+### `$nor` Operator
 
-- **Find males aged between 18 and 30 (inclusive):**
-  ```javascript
-  db["practice-data"]
-    .find(
-      { age: { $gte: 18, $lte: 30 }, gender: { $eq: "Male" } },
-      { age: 1, gender: 1 }
-    )
-    .sort({ age: 1 });
-  ```
+Joins query clauses with a logical **NOR**:
 
-### Using the `$in` Operator
-
-The `$in` operator is useful when you want to find documents where a field matches any value in a given array. This can be combined with other filters, such as age or gender.
-
-- **Find females aged exactly 18, 20, or 24:**
-
-  ```javascript
-  db["practice-data"]
-    .find(
-      {
-        age: { $in: [18, 20, 24] },
-        gender: { $eq: "Female" },
-      },
-      { age: 1, gender: 1 }
-    )
-    .sort({ age: 1 });
-  ```
-
-- **Find females interested in "Cooking" and aged exactly 18, 20, 21, 22, or 24:**
-  ```javascript
-  db["practice-data"]
-    .find(
-      {
-        interests: { $in: ["Cooking"] },
-        age: { $in: [18, 20, 24, 21, 22] },
-        gender: { $eq: "Female" },
-      },
-      { age: 1, gender: 1, interests: 1 }
-    )
-    .sort({ age: 1 });
-  ```
-
-### Using the `$nin` Operator
-
-The `$nin` operator allows you to exclude certain values from the query. This example shows how to exclude specific ages from the results while filtering by gender.
-
-- **Find females aged _not_ 18, 20, 21, 22, or 24:**
-  ```javascript
-  db["practice-data"]
-    .find(
-      {
-        age: { $nin: [18, 20, 21, 22, 24] },
-        gender: { $eq: "Female" },
-      },
-      { age: 1, gender: 1 }
-    )
-    .sort({ age: 1 });
-  ```
+```javascript
+db["practice-data"].find({
+  $nor: [{ gender: "Female" }, { age: { $gte: 30 } }],
+});
+```
 
 ---
 
 ## Sorting
 
-Sorting allows you to arrange the results based on one or more fields. You can specify `1` for ascending order and `-1` for descending order.
+You can sort results in ascending or descending order based on a specific field. Examples:
 
-- **Sort results by `age` in ascending order:**
+- Sort by `age` in ascending order:
 
   ```javascript
   db["practice-data"].find({}).sort({ age: 1 });
   ```
 
-- **Sort results by `age` in descending order:**
+- Sort by `age` in descending order:
+
   ```javascript
   db["practice-data"].find({}).sort({ age: -1 });
   ```
-
-You can apply sorting in combination with any of the queries shown above to get the results ordered by age, as demonstrated in the examples.
-
----
-
-## Official Documentation
-
-For more details on MongoDB operators and query usage, refer to the official MongoDB documentation:
-
-- [MongoDB Query Operators](https://www.mongodb.com/docs/manual/reference/operator/query/)
-- [Comparison Operators](https://www.mongodb.com/docs/manual/reference/operator/query-comparison/)
 
 ---
 
 ## Usage Examples
 
-Here are additional examples of querying based on different conditions:
+| Operation   | MongoDB Command                                                                                                   | Description                                                              |
+| ----------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Insert Data | `db["practice-data"].insertOne({ name: "Something" })`                                                            | Insert a document into the collection.                                   |
+| Find Data   | `db["practice-data"].find({ gender: "Female" }, { gender: 1, email: 1, phone: 1 })`                               | Filter by `gender` and return specific fields.                           |
+| Projection  | `db["practice-data"].find({ gender: "Male" }).projection({ name: 1, gender: 1, email: 1 })`                       | Filter for `Male` gender and project specific fields.                    |
+| `$eq`       | `db["practice-data"].find({ gender: { $eq: "Male" } })`                                                           | Finds documents where `gender` is `Male`.                                |
+| `$ne`       | `db["practice-data"].find({ age: { $ne: 12 } })`                                                                  | Finds documents where `age` is not 12.                                   |
+| `$gt`       | `db["practice-data"].find({ age: { $gt: 30 } })`                                                                  | Finds documents where `age` is greater than 30.                          |
+| `$gte`      | `db["practice-data"].find({ age: { $gte: 30 } })`                                                                 | Finds documents where `age` is greater than or equal to 30.              |
+| `$lt`       | `db["practice-data"].find({ age: { $lt: 30 } })`                                                                  | Finds documents where `age` is less than 30.                             |
+| `$lte`      | `db["practice-data"].find({ age: { $lte: 30 } })`                                                                 | Finds documents where `age` is less than or equal to 30.                 |
+| `$in`       | `db["practice-data"].find({ interests: { $in: ["Writing", "Reading"] } })`                                        | Finds documents where `interests` include `Writing` or `Reading`.        |
+| `$nin`      | `db["practice-data"].find({ interests: { $nin: ["Writing", "Reading"] } })`                                       | Finds documents where `interests` do not include `Writing` or `Reading`. |
+| `$and`      | `db["practice-data"].find({ $and: [{ gender: { $eq: "Male" } }, { age: { $gte: 18 } }, { age: { $lte: 25 } }] })` | Finds males aged 18 to 25, sorted by age.                                |
+| `$or`       | `db["practice-data"].find({ $or: [{ interests: "Traveling" }, { interests: "Cooking" }] })`                       | Finds documents where interests include `Traveling` or `Cooking`.        |
+| `$not`      | `db["practice-data"].find({ age: { $not: { $gte: 30 } } })`                                                       | Finds documents where age is not greater than or equal to 30.            |
+| `$nor`      | `db["practice-data"].find({ $nor: [{ gender: "Female" }, { age: { $gte: 30 } }] })`                               | Finds documents where gender is not `Female` and age is less than 30.    |
+| Sort (Asc)  | `db["practice-data"].find({}).sort({ age: 1 })`                                                                   | Sort results by age in ascending order.                                  |
+| Sort (Desc) | `db["practice-data                                                                                                |
 
-### Find People Between Age 25 and 40 Who Are Male
-
-```javascript
-db["practice-data"]
-  .find(
-    { age: { $gte: 25, $lte: 40 }, gender: { $eq: "Male" } },
-    { age: 1, gender: 1 }
-  )
-  .sort({ age: 1 });
-```
-
-### Find People Interested in "Reading" or "Writing"
-
-```javascript
-db["practice-data"]
-  .find(
-    { interests: { $in: ["Reading", "Writing"] } },
-    { name: 1, interests: 1 }
-  )
-  .sort({ name: 1 });
-```
-
-### Exclude People Interested in "Sports"
-
-```javascript
-db["practice-data"]
-  .find({ interests: { $nin: ["Sports"] } }, { name: 1, interests: 1 })
-  .sort({ name: 1 });
-```
+"].find({}).sort({ age: -1 })` | Sort results by age in descending order. |
 
 ---
 
-## Conclusion
+## Useful Links
 
-This README provides examples of using MongoDB query operators for filtering data based on various fields, along with sorting the results. By mastering these operators, you can perform powerful and efficient queries in MongoDB for complex data sets.
-
-Feel free to contribute more examples or improvements to this repository!
+- [MongoDB Query Operators](https://www.mongodb.com/docs/manual/reference/operator/query/)
+- [Comparison Operators](https://www.mongodb.com/docs/manual/reference/operator/query-comparison/)
+- [Logical Query Operators](https://www.mongodb.com/docs/manual/reference/operator/query-logical/)
+- [MongoDB Sorting](https://www.mongodb.com/docs/manual/reference/method/cursor.sort/)
 
 ---
+
+This README provides basic MongoDB operations, query operators, and logical operators with examples to help you practice and get familiar with MongoDB queries. Feel free to contribute more examples or improvements!
